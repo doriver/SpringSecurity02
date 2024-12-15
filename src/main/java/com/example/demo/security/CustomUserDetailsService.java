@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {  
 	/* UserDetailsService
 	 * 사용자 정보를 불러오는 방법을 정의함
 	 * 얻은 User를 UserDetails에 담아서 return해줌
