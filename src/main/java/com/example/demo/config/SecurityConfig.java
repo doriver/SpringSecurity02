@@ -46,12 +46,13 @@ public class SecurityConfig {
 				.loginPage("/plogin")
 				.permitAll()
 				.loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/suc") // successHandler() 넣어주면 defaultSuccessUrl없애고 AuthenticationSuccessHandler여기에서 response.sendRedirect("/suc"); 추가해줘야함
-				.successHandler(new CustomAuthenticationSuccessHandler()) // AuthenticationSuccessHandler 사용할수 있게 등록
+                .defaultSuccessUrl("/suc") // successHandler() 넣어주면 defaultSuccessUrl없애고 AuthenticationSuccessHandler여기에서 response.sendRedirect("/suc"); 추가해줘야함
+//				.successHandler(new CustomAuthenticationSuccessHandler()) // AuthenticationSuccessHandler 사용할수 있게 등록
 			)           
         	.logout((logout) -> logout
         			.logoutUrl("/custom-logout")  // 로그아웃 URL을 변경합니다.
                 	.logoutSuccessUrl("/")  // 로그아웃 성공 후 리디렉션할 URL을 설정
+                	.invalidateHttpSession(true) // 로그아웃시 세션 삭제
                 	.deleteCookies("JSESSIONID")
         			.permitAll()
         	);
