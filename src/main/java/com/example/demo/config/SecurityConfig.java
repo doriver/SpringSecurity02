@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import com.example.demo.security.CustomAuthenticationSuccessHandler;
 import com.example.demo.security.CustomUserDetailsService;
+import com.example.demo.security.oauth.MyOAuth2UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,13 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final CustomUserDetailsService userDetailsService;
-
-//  @Bean
-//  public WebSecurityCustomizer webSecurityCustomizer() { // 이걸로 했을때 권장하지 않는다고 했었음 콘솔창에서
-//      return (web) -> web
-//              .ignoring().antMatchers();
-//  }
-	
+	private final MyOAuth2UserService myOAuth2UserService;
 	
 	/*
 	 * HttpSecurity에서 빌드해서 SecurityFilterChain스프링빈으로 등록해줌
@@ -55,6 +50,11 @@ public class SecurityConfig {
                 	.invalidateHttpSession(true) // 로그아웃시 세션 삭제
                 	.deleteCookies("JSESSIONID")
         			.permitAll()
+        	)
+        	.oauth2Login(auth -> auth
+        			.loginPage("/plogin")
+        			.userInfoEndpoint(user -> user.userService(myOAuth2UserService))
+        			.defaultSuccessUrl("/suc", true)
         	);
      
         return http.build();
